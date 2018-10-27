@@ -1,6 +1,6 @@
 # robotC
 
 
-I make simple avoid poop game 
+I make simple poop avoid game 
 
 it's only work on robotC(Ev3)
