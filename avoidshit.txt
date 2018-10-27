@@ -1,0 +1,82 @@
+int manStart = 50;
+int manEnd = 50;
+int manSize = 10;
+int manMovementValue = 4;
+int GameplayCheck = 1;
+int manX = 0;
+int shitX[8];
+int shitY = 130;
+int shitDown = 3;
+
+
+void crash()
+{
+	for(int i=0; i<8; i++){
+		if(shitY < 10){
+			writeDebugStreamLine("shity < 10");
+			if(shitX[i] >= manStart && shitX[i] <= manEnd){
+				writeDebugStreamLine("here crush");
+				GameplayCheck = 0;
+				
+			}
+		}
+	}
+  
+
+}
+void drawman()
+{
+	drawRect(manStart,20,manEnd,10);
+	manStart =  manX + manMovementValue;
+	manEnd = manSize + manX + manMovementValue;
+}
+
+void moveman()
+{
+	if(getButtonPress(buttonLeft)==1){
+		manX = manX - manMovementValue;
+	}
+	if(getButtonPress(buttonRight)==1){
+		manX = manX + manMovementValue;
+	}
+}
+
+void dropshit()
+{
+
+
+	if(shitY <= -50)
+	{
+		for(int i = 0; i < 8; i++)
+		{
+			shitX[i] =  abs(rand() % 148 + 1);
+			shitY = 130;
+		}
+
+	}
+
+	shitY = shitY - shitDown;
+	for(int t = 0; t <  8; t++)
+	{
+		drawCircle(shitX[t],shitY +( 9*t) ,10);
+
+	}
+
+}
+
+
+
+task main(){
+	clearDebugStream();
+
+
+	while(GameplayCheck)
+	{
+		drawman();
+		moveman();
+		dropshit();
+		crash();
+		sleep(100);
+		eraseDisplay();
+	}
+}
